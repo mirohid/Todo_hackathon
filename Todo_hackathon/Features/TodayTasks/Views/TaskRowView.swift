@@ -5,8 +5,8 @@
 //  Created by Mir Ohid Ali  on 19/02/26.
 //
 
-
 import SwiftUI
+internal import CoreData
 
 struct TaskRowView: View {
 
@@ -63,4 +63,31 @@ struct TaskRowView: View {
         .padding(.vertical, 8)
         .contentShape(Rectangle())
     }
+}
+
+#Preview {
+    // Create an in-memory Core Data stack for previewing
+    let container = NSPersistentContainer(name: "Todo_hackathon")
+    let description = NSPersistentStoreDescription()
+    description.type = NSInMemoryStoreType
+    container.persistentStoreDescriptions = [description]
+    container.loadPersistentStores { _, error in
+        if let error = error {
+            fatalError("Failed to load in-memory store: \(error)")
+        }
+    }
+
+    let context = container.viewContext
+
+    let task = Task(context: context)
+    task.id = UUID()
+    task.title = "Design MVVM architecture"
+    task.createdAt = Date()
+    task.isCompleted = false
+    task.expiresAt = Calendar.current.date(byAdding: .hour, value: 2, to: Date())
+
+    return TaskRowView(task: task) {
+        print("Toggle tapped")
+    }
+    .padding()
 }

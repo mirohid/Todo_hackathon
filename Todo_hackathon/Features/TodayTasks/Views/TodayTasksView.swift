@@ -158,3 +158,19 @@ struct TodayTasksView: View {
         .padding(.bottom, 24)
     }
 }
+
+#Preview("Light Mode") {
+    let context = CoreDataStack.preview.container.viewContext
+    let viewModel = TodayTasksViewModel(context: context)
+
+    TodayTasksView(viewModel: viewModel)
+        .preferredColorScheme(.light)
+}
+
+#Preview("Dark Mode") {
+    let context = CoreDataStack.preview.container.viewContext
+    let viewModel = TodayTasksViewModel(context: context)
+
+    TodayTasksView(viewModel: viewModel)
+        .preferredColorScheme(.dark)
+}

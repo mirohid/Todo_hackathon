@@ -8,6 +8,7 @@
 
 import SwiftUI
 import Combine
+internal import CoreData
 
 struct AddTaskView: View {
 
@@ -73,4 +74,11 @@ struct AddTaskView: View {
             }
         }
     }
+}
+
+#Preview {
+    let context = CoreDataStack.preview.container.viewContext
+    let viewModel = TodayTasksViewModel(context: context)
+
+    return AddTaskView(viewModel: viewModel)
 }
